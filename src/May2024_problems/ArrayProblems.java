@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ArrayProblems {
 
-    /*
+    /**
     * Problem 1: You are given a list of numbers, and a target number k.
     * Return whether or not there are two numbers in the list that add up to k.
 
@@ -72,6 +72,37 @@ public class ArrayProblems {
 
         return false;
 
+    }
+
+    /**
+
+     Problem 2: Given a 32 bit integer, reverse the bits and return that number.
+
+     Example1 : Input: 1234
+     # In bits this would be 0000 0000 0000 0000 0000 0100 1101 0010
+     Output: 1260388352
+     # Reversed bits is 0100 1011 0010 0000 0000 0000 0000 0000
+
+     Example 2: Input : 16 (00000000 00000000 00000000 00010000)
+     Output: 134217728 (00001000 00000000 00000000 00000000)
+
+     */
+
+    public long reverseBits(long num){
+
+        long result = 0;
+
+       for(int i=0;i<32;i++){
+
+            result = result << 1;
+
+            if((num & 1) == 1)
+                result = result ^ 1;
+
+            num = num >> 1;
+        }
+
+        return result;
     }
 
 }
