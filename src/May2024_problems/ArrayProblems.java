@@ -105,4 +105,65 @@ public class ArrayProblems {
         return result;
     }
 
+    /**
+     *
+     *
+     * Problem 3: Circular Array Loop
+     *
+     */
+
+    public boolean circularArrayLoop(int[] nums) {
+
+        // Replace this placeholder return statement with your code
+        int size, fast, slow;
+        boolean forward;
+
+        for(int i=0;i<nums.length;i++){
+
+            fast = i;
+            slow = i;
+            forward = nums[i] > 0;
+
+            while(true){
+
+                slow = getNextStep(nums, slow, forward);
+
+                if(slow == -1)
+                    break;
+
+                fast = getNextStep(nums,fast,forward);
+
+                if(fast == -1)
+                    break;
+
+                fast = getNextStep(nums,fast,forward);
+
+                if(fast == -1)
+                    break;
+
+                if(slow == fast)
+                    return true;
+
+            }
+
+
+        }
+        return false;
+    }
+
+    public int getNextStep(int[] nums, int pointer, boolean prevDirection){
+        boolean currDirection = nums[pointer] > 0;
+        if(prevDirection != currDirection)
+            return -1;
+        int nextStep = (pointer + nums[pointer]) % nums.length;
+
+        if(nextStep < 0){
+            nextStep = nextStep + nums.length;
+        }
+
+        if(nextStep == pointer)
+            return -1;
+        return nextStep;
+    }
+
 }
