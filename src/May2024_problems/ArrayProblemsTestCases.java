@@ -7,9 +7,6 @@ import org.junit.Test;
 public class ArrayProblemsTestCases {
 
 
-
-
-
     @Test
     public void testReverseBitsCaseOne(){
         ArrayProblems arrayProblems = new ArrayProblems();
