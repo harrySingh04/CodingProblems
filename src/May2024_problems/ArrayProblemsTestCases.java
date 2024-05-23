@@ -66,4 +66,30 @@ public class ArrayProblemsTestCases {
 
     }
 
+    @Test
+    public void testFirstNegativeSizeK(){
+
+        int[][] input = {
+                {12, -1 , -7 ,- 8, -30, 16, 20, 28}
+        };
+
+        int[] inputSize = {3,4,2};
+
+        int[][] expectedOuput = {
+                {-1,-1,-7,-8,-30,0,0,0}
+        };
+
+        for(int i=0;i<input.length;i++){
+
+            int[] output = arrayProblems.firstNegativeNumberSubArray(input[i], inputSize[i]);
+
+            Assert.assertEquals(expectedOuput[i][0],output[0]);
+            Assert.assertEquals(expectedOuput[i][1],output[1]);
+            Assert.assertEquals(expectedOuput[i][2],output[2]);
+            Assert.assertEquals(expectedOuput[i][3],output[3]);
+            Assert.assertEquals(expectedOuput[i][4],output[4]);
+        }
+
+
+    }
 }

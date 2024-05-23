@@ -1,8 +1,7 @@
 package May2024_problems;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.*;
 
 public class ArrayProblems {
 
@@ -198,6 +197,43 @@ public class ArrayProblems {
         }
 
         return maxSum;
+    }
+
+    public int[] firstNegativeNumberSubArray(int[] nums, int k){
+
+        int i,j,a;
+
+        Queue<Integer> queue = new LinkedList<>();
+
+
+
+        int[] result = new int[nums.length];
+
+        i = 0;j = 0;a = 0;
+
+        while(j < nums.length){
+            if(nums[j] < 0)
+                queue.add(nums[j]);
+
+            if(j - i + 1 < k)
+                j++;
+            else if(j - i + 1 == k){
+                if(queue.size() > 0) {
+                    if(nums[i] != queue.peek()) {
+                        result[a] = queue.peek();
+                        a++;
+                    }
+                    else{
+                        result[a] = queue.remove();
+                        a++;
+                    }
+                }
+                i ++;
+                j++;
+            }
+        }
+
+        return result;
     }
 
 }
