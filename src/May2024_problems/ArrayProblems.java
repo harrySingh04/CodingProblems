@@ -236,4 +236,50 @@ public class ArrayProblems {
         return result;
     }
 
+
+    /**
+     *
+     * Max sub array of size K , leet code hard problem # 239 (Sliding Window Maximum)
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+
+        int i,j, start;
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        int[] maxSums = new int[nums.length-k+1];
+
+        i = 0;
+        j = 0;
+        start = 0;
+
+
+        while (j < nums.length){
+
+            while(deque.size() != 0 && deque.peekFirst() < nums[j] ){
+                deque.pollFirst();
+            }
+
+            while(deque.size() != 0 && deque.peekLast() < nums[j]){
+                deque.pollLast();
+            }
+
+            deque.addLast(nums[j]);
+
+            if(j- i + 1 < k)
+                j++;
+            else if(j - i + 1 == k){
+                maxSums[start++] = deque.peekFirst();
+                if(deque.peekFirst() == nums[i]){
+                    deque.pollFirst();
+                }
+                i++;
+                j++;
+            }
+
+        }
+
+        return maxSums;
+
+    }
+
 }
