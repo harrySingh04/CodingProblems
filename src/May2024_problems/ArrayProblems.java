@@ -1,8 +1,7 @@
 package May2024_problems;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.*;
 
 public class ArrayProblems {
 
@@ -198,6 +197,203 @@ public class ArrayProblems {
         }
 
         return maxSum;
+    }
+
+    public int[] firstNegativeNumberSubArray(int[] nums, int k){
+
+        int i,j,a;
+
+        Queue<Integer> queue = new LinkedList<>();
+
+
+
+        int[] result = new int[nums.length];
+
+        i = 0;j = 0;a = 0;
+
+        while(j < nums.length){
+            if(nums[j] < 0)
+                queue.add(nums[j]);
+
+            if(j - i + 1 < k)
+                j++;
+            else if(j - i + 1 == k){
+                if(queue.size() > 0) {
+                    if(nums[i] != queue.peek()) {
+                        result[a] = queue.peek();
+                        a++;
+                    }
+                    else{
+                        result[a] = queue.remove();
+                        a++;
+                    }
+                }
+                i ++;
+                j++;
+            }
+        }
+
+        return result;
+    }
+
+
+    /**
+     *
+     * Max sub array of size K , leet code hard problem # 239 (Sliding Window Maximum)
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+
+        int i,j, start;
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        int[] maxSums = new int[nums.length-k+1];
+
+        i = 0;
+        j = 0;
+        start = 0;
+
+
+        while (j < nums.length){
+
+            while(deque.size() != 0 && deque.peekFirst() < nums[j] ){
+                deque.pollFirst();
+            }
+
+            while(deque.size() != 0 && deque.peekLast() < nums[j]){
+                deque.pollLast();
+            }
+
+            deque.addLast(nums[j]);
+
+            if(j- i + 1 < k)
+                j++;
+            else if(j - i + 1 == k){
+                maxSums[start++] = deque.peekFirst();
+                if(deque.peekFirst() == nums[i]){
+                    deque.pollFirst();
+                }
+                i++;
+                j++;
+            }
+
+        }
+
+        return maxSums;
+
+    }
+
+    public static int minSubArrayLen(int target, int[] nums) {
+
+        // Replace this placeholder return statement with your code
+
+        int i = 0 ,j = 0, minLength = Integer.MAX_VALUE, currentSum = 0;
+
+        while( j < nums.length){
+
+            currentSum += nums[j];
+
+            if(currentSum < target)
+                j++;
+            else{
+                while(currentSum >= target){
+                    minLength = Math.min(minLength, j - i + 1);
+                    currentSum -= nums[i];
+                    i++;
+                }
+                j++;
+            }
+
+        }
+
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
+    }
+
+    public static int maxProfit(int[] prices) {
+
+        // Replace this placeholder return statement with your code
+
+
+        int buyPrice, currentProfit, maxProfit = 0;
+
+        buyPrice = prices[0];
+
+        for(int i = 1;i <prices.length;i++){
+
+            if(prices[i] <  buyPrice)
+                buyPrice = prices[i];
+            else{
+                currentProfit = prices[i] - buyPrice;
+                maxProfit = Math.max(currentProfit, maxProfit);
+            }
+        }
+
+
+
+        return maxProfit;
+    }
+
+    /**
+     * You are visiting a farm that has a single row of fruit trees arranged from left to right.
+     * The trees are represented by an integer array fruits where fruits[i] is the type of fruit the ith tree produces.
+     *
+     * You want to collect as much fruit as possible. However, the owner has some strict rules that you must follow:
+     *
+     * You only have two baskets, and each basket can only hold a single type of fruit. There is no limit on
+     * the amount of fruit each basket can hold.Starting from any tree of your choice, you must pick exactly
+     * one fruit from every tree (including the start tree) while moving to the right.
+     * The picked fruits must fit in one of your baskets.Once you reach a tree with fruit that cannot fit
+     * in your baskets, you must stop.Given the integer array fruits, return the maximum number of fruits you can pick.
+     *
+     * Example 1:
+     *
+     * Input: fruits = [1,2,1]
+     * Output: 3
+     * Explanation: We can pick from all 3 trees.
+     * Example 2:
+     *
+     * Input: fruits = [0,1,2,2]
+     * Output: 3
+     * Explanation: We can pick from trees [1,2,2].
+     * If we had started at the first tree, we would only pick from trees [0,1].
+     * Example 3:
+     *
+     * Input: fruits = [1,2,3,2,2]
+     * Output: 4
+     * Explanation: We can pick from trees [2,3,2,2].
+     * If we had started at the first tree, we would only pick from trees [1,2].
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= fruits.length <= 105
+     * 0 <= fruits[i] < fruits.length
+     */
+
+    public int totalFruit(int[] fruits) {
+
+        int i = 0, j = 0, maxCount = 0, count;
+
+        Map<Integer,Integer> fruitBasket = new HashMap<>();
+
+        while ( j < fruits.length){
+
+            fruitBasket.put(fruits[j], fruitBasket.getOrDefault(fruits[j], 0) + 1);
+
+            if(fruitBasket.size() <= 2 ){
+                maxCount = Math.max(maxCount, j - i + 1);
+            }
+
+            while(fruitBasket.size() > 2){
+                fruitBasket.put(fruits[i], fruitBasket.get(fruits[i]) -  1);
+                if(fruitBasket.get(fruits[i]) == 0)
+                    fruitBasket.remove(fruits[i]);
+                i ++;
+            }
+            j++;
+        }
+
+        return maxCount;
+
     }
 
 }
