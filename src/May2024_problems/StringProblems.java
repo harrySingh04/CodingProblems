@@ -4,22 +4,22 @@ import java.util.*;
 
 public class StringProblems {
 
-    public int countAnagramsOccurance(String string1, String string2){
+    public int countAnagramsOccurance(String string1, String string2) {
 
-        Map<Character,Integer> characterCount = new HashMap<>();
+        Map<Character, Integer> characterCount = new HashMap<>();
 
 
-        for(int i=0;i<string2.length();i++){
+        for (int i = 0; i < string2.length(); i++) {
             char ch = string2.charAt(i);
 
-            if(characterCount.containsKey(ch))
-                characterCount.put(ch,characterCount.get(ch)+1);
+            if (characterCount.containsKey(ch))
+                characterCount.put(ch, characterCount.get(ch) + 1);
             else
-                characterCount.put(ch,1);
+                characterCount.put(ch, 1);
 
         }
 
-        int i,j, k, result = 0, countUnique;
+        int i, j, k, result = 0, countUnique;
 
         j = 0;
         i = 0;
@@ -27,32 +27,31 @@ public class StringProblems {
 
         countUnique = characterCount.size();
 
-        while(j < string1.length()){
+        while (j < string1.length()) {
 
             char ch = string1.charAt(j);
 
-            if(characterCount.containsKey(ch)) {
+            if (characterCount.containsKey(ch)) {
                 characterCount.put(ch, characterCount.get(ch) - 1);
-                if(characterCount.get(ch) == 0)
+                if (characterCount.get(ch) == 0)
                     countUnique--;
             }
 
-            if(j - i + 1 < k)
+            if (j - i + 1 < k)
                 j++;
-            else if(j - i + 1 == k){
+            else if (j - i + 1 == k) {
 
-                if(countUnique == 0) {
+                if (countUnique == 0) {
                     result++;
                 }
 
-                if(characterCount.containsKey(string1.charAt(i)))
-                {
+                if (characterCount.containsKey(string1.charAt(i))) {
                     char ch2 = string1.charAt(i);
 
-                    if(characterCount.get(ch2) == 0){
+                    if (characterCount.get(ch2) == 0) {
                         countUnique++;
                     }
-                    characterCount.put(ch2,characterCount.get(ch2)+1);
+                    characterCount.put(ch2, characterCount.get(ch2) + 1);
                 }
 
                 i++;
@@ -66,7 +65,6 @@ public class StringProblems {
 
 
     /**
-     *
      * Given a string, s, that represents a DNA subsequence, and a number k, return all the contiguous subsequences
      * (substrings) of length k that occur more than once in the string.
      * The order of the returned subsequences does not matter.
@@ -80,24 +78,24 @@ public class StringProblems {
      */
 
 
-    public static Set<String> findRepeatedSequences(String s, int k){
+    public static Set<String> findRepeatedSequences(String s, int k) {
 
-        int  n = s.length();
+        int n = s.length();
 
-        if(n < k)
+        if (n < k)
             return new HashSet<>();
 
         Map<Character, Integer> mapping = new HashMap<>();
-        mapping.put('A',1);
-        mapping.put('C',2);
-        mapping.put('G',3);
-        mapping.put('T',4);
+        mapping.put('A', 1);
+        mapping.put('C', 2);
+        mapping.put('G', 3);
+        mapping.put('T', 4);
 
         int a = 4;
 
         List<Integer> mappingNumbers = new ArrayList<>();
 
-        for(int i=0;i<n;i++){
+        for (int i = 0; i < n; i++) {
             mappingNumbers.add(mapping.get(s.charAt(i)));
         }
 
@@ -106,15 +104,14 @@ public class StringProblems {
 
         int hashValue = 0;
 
-        for(int i=0;i<n - k + 1;i++ ){
+        for (int i = 0; i < n - k + 1; i++) {
 
-            if(i == 0){
-                for(int j = 0;j < k ;j++){
-                    hashValue += mappingNumbers.get(j) * (int)Math.pow(a,k -j -1);
+            if (i == 0) {
+                for (int j = 0; j < k; j++) {
+                    hashValue += mappingNumbers.get(j) * (int) Math.pow(a, k - j - 1);
 
                 }
-            }
-            else{
+            } else {
                 int previousHashValue = hashValue;
                 hashValue = ((previousHashValue - mappingNumbers.get(i - 1) * (int) Math.pow(a, k - 1)) * a) + mappingNumbers.get(i + k - 1);
             }
@@ -129,6 +126,7 @@ public class StringProblems {
         return output;
 
     }
+
     public static void main(String[] args) {
         /*List<String> inputsString = Arrays.asList("ACGT", "AGACCTAGAC", "AAAAACCCCCAAAAACCCCCC",
                 "GGGGGGGGGGGGGGGGGGGGGGGGG", "TTTTTCCCCCCCTTTTTTCCCCCCCTTTTTTT", "TTTTTGGGTTTTCCA",
@@ -172,7 +170,6 @@ public class StringProblems {
 
     /**
      *
-     *
      */
 
     // Worst case time complexity is O( n * m)
@@ -180,41 +177,40 @@ public class StringProblems {
 
         // Replace this placeholder return statement with your code
 
-        int i = 0 ,j = 0,k = 0,m = s.length(), n = t.length(),
+        int i = 0, j = 0, k = 0, m = s.length(), n = t.length(),
                 start = 0, end = 0, minLength = Integer.MAX_VALUE;
 
 
-        while( j < m && k < n){
+        while (j < m && k < n) {
 
-            if(s.charAt(j) == t.charAt(k))
+            if (s.charAt(j) == t.charAt(k))
                 k++;
 
-            if(k == n){
+            if (k == n) {
                 i = j;
-                k = n-1;
+                k = n - 1;
 
-                while(i >=0 && k >=0){
-                    if(s.charAt(i) == t.charAt(k))
+                while (i >= 0 && k >= 0) {
+                    if (s.charAt(i) == t.charAt(k))
                         k--;
                     i--;
                 }
 
                 i++;
 
-                if(minLength > j- i +1){
+                if (minLength > j - i + 1) {
                     start = i;
-                    end = j+1;
-                    minLength = j - i +1;
+                    end = j + 1;
+                    minLength = j - i + 1;
                 }
                 k = 0;
-                j = i+1;
+                j = i + 1;
 
-            }
-            else
+            } else
                 j++;
 
         }
-        return s.substring(start,end) ;
+        return s.substring(start, end);
     }
 
     public static int longestRepeatingCharacterReplacement(String s, int k) {
@@ -222,28 +218,28 @@ public class StringProblems {
 
         int i = 0, j = 0, maxLength = Integer.MIN_VALUE;
 
-        Map<Character,Integer> characterFreq = new HashMap<>();
+        Map<Character, Integer> characterFreq = new HashMap<>();
 
         int maxCharFreq = 0;
 
         char currentChar;
 
-        while(j < s.length()){
+        while (j < s.length()) {
 
             currentChar = s.charAt(j);
 
-            characterFreq.put(currentChar, characterFreq.getOrDefault(currentChar,0)+ 1);
+            characterFreq.put(currentChar, characterFreq.getOrDefault(currentChar, 0) + 1);
 
-            maxCharFreq = Math.max(maxCharFreq,characterFreq.get(currentChar));
+            maxCharFreq = Math.max(maxCharFreq, characterFreq.get(currentChar));
 
             // More than window size
-            if(j - i + 1 - maxCharFreq > k){
+            if (j - i + 1 - maxCharFreq > k) {
                 // remove from i
-                characterFreq.put(s.charAt(i), characterFreq.get(s.charAt(i))- 1);
+                characterFreq.put(s.charAt(i), characterFreq.get(s.charAt(i)) - 1);
                 i++;
             }
 
-            maxLength = Math.max(maxLength, j -i +1);
+            maxLength = Math.max(maxLength, j - i + 1);
             j++;
 
         }
@@ -258,37 +254,37 @@ public class StringProblems {
 
         Map<Character, Integer> freqMap = new HashMap<>();
 
-        for(int a = 0;a<t.length();a++){
+        for (int a = 0; a < t.length(); a++) {
 
-            freqMap.put(t.charAt(a), freqMap.getOrDefault(t.charAt(a),0)+ 1);
+            freqMap.put(t.charAt(a), freqMap.getOrDefault(t.charAt(a), 0) + 1);
         }
 
         count = freqMap.size();
 
 
-        while ( j < s.length()){
+        while (j < s.length()) {
 
             char ch = s.charAt(j);
 
-            if(freqMap.containsKey(ch)){
+            if (freqMap.containsKey(ch)) {
 
-                freqMap.put(ch,freqMap.get(ch)- 1);
+                freqMap.put(ch, freqMap.get(ch) - 1);
 
-                if(freqMap.get(ch) == 0)
+                if (freqMap.get(ch) == 0)
                     count--;
 
             }
 
 
-            while( count == 0){
-                if(j - i + 1 < minLength){
+            while (count == 0) {
+                if (j - i + 1 < minLength) {
                     minLength = j - i + 1;
                     start = i;
                     end = j;
                 }
-                if(freqMap.containsKey(s.charAt(i))){
+                if (freqMap.containsKey(s.charAt(i))) {
                     freqMap.put(s.charAt(i), freqMap.get(s.charAt(i)) + 1);
-                    if(freqMap.get(s.charAt(i)) > 0)
+                    if (freqMap.get(s.charAt(i)) > 0)
                         count++;
                 }
                 i++;
@@ -298,6 +294,38 @@ public class StringProblems {
             j++;
         }
 
-        return s.substring(start, end+ 1);
+        return s.substring(start, end + 1);
+    }
+
+    public static int findLongestSubstring(String str) {
+
+        // Replace this placeholder return statement with your code
+
+        int i = 0, j = 0, maxLength = Integer.MIN_VALUE;
+
+        Map<Character, Integer> charFreq = new HashMap<>();
+
+        while (j < str.length()) {
+
+            charFreq.put(str.charAt(j), charFreq.getOrDefault(str.charAt(j), 0) + 1);
+
+            if (charFreq.size() == j - i + 1)
+                maxLength = Math.max(maxLength, j - i + 1);
+
+            while (charFreq.size() < j - i + 1) {
+                if (charFreq.containsKey(str.charAt(i))) {
+                    charFreq.put(str.charAt(i), charFreq.get(str.charAt(i)) - 1);
+                    if (charFreq.get(str.charAt(i)) == 0)
+                        charFreq.remove(str.charAt(i));
+
+                }
+                i++;
+            }
+
+            j++;
+
+        }
+
+        return maxLength;
     }
 }
