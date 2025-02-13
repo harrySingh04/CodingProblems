@@ -12,9 +12,8 @@ wherever possible.
 
 ### Topics Covered
 
-* Two Pointer
-* Dynamic Programming
-* Graph
+* Recursion
+* Will keep adding as finished
 
 ### Patterns Covered
 
