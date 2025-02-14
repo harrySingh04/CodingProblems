@@ -22,6 +22,6 @@ but instead of using a sliding window, it uses a binary search to find the index
 that is greater than k. The time complexity of this solution is O(nlogn),
 where n is the length of the input array.
 
-2. Sub Array product greater than k
+2. 
 
 
